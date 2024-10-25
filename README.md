@@ -280,48 +280,55 @@ int main(){
 
 这是排序算法的题目：
 ```cpp
-#include<bits/stdc++.h>
-#define MAXN 100000
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = (low - 1);
 
-#define int long long
-int n,a[MAXN],b[MAXN],c[MAXN],d[MAXN];
-void QuickSort(int array[], int low, int high) {
-    int i = low; 
-    int j = high;
-    if(i >= j) {
-        return;
-    }
- 
-    int temp = array[low];
-    while(i != j) {
-        while(array[j] >= temp && i < j) {
-            j--;
-        }
-	while(array[i] <= temp && i < j) {
+    for (int j = low; j <= high - 1; j++) {
+        if (arr[j] < pivot) {
             i++;
-        }
-	if(i < j) {
-            swap(array[i], array[j]);
+            std::swap(arr[i], arr[j]);
         }
     }
- 
-    //将基准temp放于自己的位置，（第i个位置）
-    swap(array[low], array[i]);
-    QuickSort(array, low, i - 1);
-    QuickSort(array, i + 1, high);
+    std::swap(arr[i + 1], arr[high]);
+    return (i + 1);
+}
 
-signed main(){//因为有int long long所以用signed
-    std::cin>>n;
-    for(int i=0;i<n;i++){
-        std::cin>>a[i];
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        int pivot = partition(arr, low, high);
+        quickSort(arr, low, pivot - 1);
+        quickSort(arr, pivot + 1, high);
     }
-    QuickSort(0,n);
-    for(int i=0;i<n;i++){
-        std::cout<<a[i]<<" ";
-    }
-    return 0;
+}
+
+//另一种快速排序的方法
+template <typename T>
+int Paritition(T A[], int low, int high) {
+  int pivot = A[low];
+  while (low < high) {
+    while (low < high && pivot <= A[high]) --high;
+    A[low] = A[high];
+    while (low < high && A[low] <= pivot) ++low;
+    A[high] = A[low];
+  }
+  A[low] = pivot;
+  return low;
+}
+template <typename T>
+void QuickSort(T A[], int low, int high) {
+  if (low < high) {
+    int pivot = Paritition(A, low, high);
+    QuickSort(A, low, pivot - 1);
+    QuickSort(A, pivot + 1, high);
+  }
+}
+template <typename T>
+void QuickSort(T A[], int len) {
+  QuickSort(A, 0, len - 1);
 }
 ```
+
 用`std`来解决这个问题:
 ```cpp
 #include<bits/stdc++.h>
