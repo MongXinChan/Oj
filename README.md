@@ -275,3 +275,74 @@ int main(){
 
 >Summary,Oct23
 >今天主要学了Js，并且把静态链表的笔记整理了一下，上面是一些摘录，我对后面关于`栈`的如何写有了一定的眉目，明天满课看看能不能动笔写完关于栈的文章。
+
+
+
+这是排序算法的题目：
+```cpp
+#include<bits/stdc++.h>
+#define MAXN 100000
+
+#define int long long
+int n,a[MAXN],b[MAXN],c[MAXN],d[MAXN];
+void QuickSort(int array[], int low, int high) {
+    int i = low; 
+    int j = high;
+    if(i >= j) {
+        return;
+    }
+ 
+    int temp = array[low];
+    while(i != j) {
+        while(array[j] >= temp && i < j) {
+            j--;
+        }
+	while(array[i] <= temp && i < j) {
+            i++;
+        }
+	if(i < j) {
+            swap(array[i], array[j]);
+        }
+    }
+ 
+    //将基准temp放于自己的位置，（第i个位置）
+    swap(array[low], array[i]);
+    QuickSort(array, low, i - 1);
+    QuickSort(array, i + 1, high);
+
+signed main(){//因为有int long long所以用signed
+    std::cin>>n;
+    for(int i=0;i<n;i++){
+        std::cin>>a[i];
+    }
+    QuickSort(0,n);
+    for(int i=0;i<n;i++){
+        std::cout<<a[i]<<" ";
+    }
+    return 0;
+}
+```
+用`std`来解决这个问题:
+```cpp
+#include<bits/stdc++.h>
+#define MAXN 100000
+#define int long long
+
+signed main(){//因为有int long long所以用signed
+    signed n,a[MAXN];
+    std::cin>>n;
+    for(signed i=0;i<n;i++){
+        std::cin>>a[i];
+    }
+    std::sort(a,a+n);
+    for(signed i=0;i<n;i++){
+        std::cout<<a[i]<<" ";
+    }
+    return 0;
+}
+```
+
+> 注意到有`#define int long long`，我们可以采用`signed`来代替`int`，其次是即便是`sort(a,a+n)`也要有`std::`前缀，经常忘记的还有`std::string`，这是由于string，sort都存放在std命名空间中（想起来还得去写一篇关于命名空间的Blog）
+> Today's Summary:
+> 说句实话，这两天比较忙只能做到两天一道题~~毕竟从早九上到晚十~~，所以我觉得，周四可以少点任务量，昨天赶完JS的笔记，加上也复习了不少数据库，总体上任务量还是蛮大的。所以我觉得适量削减一些任务，是有存在的必要，今天oj只写一道题的原因是：**_友心疾，陪之_**。
+> 明天见。
