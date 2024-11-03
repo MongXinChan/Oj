@@ -353,3 +353,99 @@ signed main(){//因为有int long long所以用signed
 > Today's Summary:
 > 说句实话，这两天比较忙只能做到两天一道题~~毕竟从早九上到晚十~~，所以我觉得，周四可以少点任务量，昨天赶完JS的笔记，加上也复习了不少数据库，总体上任务量还是蛮大的。所以我觉得适量削减一些任务，是有存在的必要，今天oj只写一道题的原因是：**_友心疾，陪之_**。
 > 明天见。
+
+-----
+我是无情的分割线
+> 陪他走了一晚上的散步——音乐会还是蛮快乐的，虽然说现在是11月3号补记，但是不妨碍我跟他参加了一个不错的音乐会。
+
+>言归正传，这周主要是把精力集中在数据库，数据结构和Java的语法学习上，OJ我好像是有点怯懦了，因为面对一道又一道山，我有点难以前进，但话又说回来，如果不走，那永远都在原地踏步。
+
+
+>不得不提到对两栈共享空间的又一理解，**我原本以为是两个栈来共同组成一个类似于队列的东西，但是事实证明我把他们搞混了**，两个栈确实可以构成一个队列（先进先出的特性），但是两栈共享空间并不是这么一回事，而是利用同一共享空间，**top1指向栈底当作第一个栈的指针，top2指向栈顶，当作第二个栈的指针，两个栈进出互不影响。**
+
+## Dec
+```cpp
+#include<iostream>
+#include<bits/stdc++.h>
+#define MAXN 1000
+using namespace std;
+struct mox{
+	string n;//name
+	string b_pos,a_pos;//position
+	long long int con;//contribution
+	int le,num;//level,number
+}mx[MAXN];
+
+int cmp1(mox a,mox b){
+	if(a.con==b.con)
+		return a.num<b.num;
+	else
+		return a.con>b.con;
+}
+
+short trans(string a){//transfer
+	if (a=="BangZhu") return 0;
+	if (a=="FuBangZhu") return 1;
+	if (a=="HuFa") return 2;
+	if (a=="ZhangLao") return 3;
+	if (a=="TangZhu") return 4;
+	if (a=="JingYing") return 5;
+	if (a=="BangZhong") return 6;
+}
+
+int cmp2(mox a,mox b){
+	if(trans(a.a_pos)==trans(b.a_pos)){
+		if(a.le==b.le)	return a.num<b.num;
+		return	a.le>b.le;
+	}
+	return trans(a.a_pos)<trans(b.a_pos); 
+}
+
+int main(){
+	int N;
+	cin>>N; 
+	for(int i=0;i<N;i++){
+		cin>>mx[i].n>>mx[i].b_pos>>mx[i].con>>mx[i].le;
+		mx[i].num=i;
+	}
+	sort(mx+3,mx+N,cmp1);
+	for (int i=0;i<N;i++){
+		if (i==0) mx[i].a_pos="BangZhu";
+		else if (i==1||i==2) mx[i].a_pos="FuBangZhu";
+		else if (i==3||i==4) mx[i].a_pos="HuFa";
+		else if (i>=5&&i<=8) mx[i].a_pos="ZhangLao";
+		else if (i>=9&&i<=15) mx[i].a_pos="TangZhu";
+		else if (i>=16&&i<=40) mx[i].a_pos="JingYing";
+		else mx[i].a_pos="BangZhong";
+	}
+	sort(mx,mx+N,cmp2);
+	for (int i=0;i<N;i++){
+		cout<<mx[i].n<<" "<<mx[i].a_pos<<" "<<mx[i].le<<endl;
+	}
+    return 0;
+}
+```
+```cpp
+#include <iostream>
+using namespace std;
+const int MAXN = 200 + 10;
+int n, na, nb, a[MAXN], b[MAXN], cnta, cntb;
+int vs[5][5] = {{0,0,1,1,0},{1,0,0,1,0},{0,1,0,0,1},{0,0,1,0,1},{1,1,0,0,0}}; //得分表的处理 
+int main()
+{
+    cin >> n >> na >> nb;
+    for(int i = 0; i < na; i++) cin >> a[i];
+    for(int i = 0; i < nb; i++) cin >> b[i];
+    for(int i = 0; i < n; i++)
+    {
+        cnta += vs[a[i % na]][b[i % nb]]; //周期循环 
+        cntb += vs[b[i % nb]][a[i % na]];
+    }
+    cout << cnta << " " << cntb << endl;
+    return 0;
+}
+```
+>11月3号：
+>还是要重新认识`sort(a,a+n,cmp)`中的cmp,cmp 函数或函数对象需要接受两个参数，并返回一个布尔值。这两个参数是数组中的元素，cmp 需要根据这两个元素确定它们的相对顺序。如果 cmp 返回 true，则表示第一个参数应该排在第二个参数之前；如果返回 false，则表示第一个参数应该排在第二个参数之后。
+
+其次是打表法，打表法还是蛮好用的，比我一开始用switch更为简便多了。
