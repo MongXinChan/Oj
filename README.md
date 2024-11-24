@@ -449,3 +449,20 @@ int main()
 >还是要重新认识`sort(a,a+n,cmp)`中的cmp,cmp 函数或函数对象需要接受两个参数，并返回一个布尔值。这两个参数是数组中的元素，cmp 需要根据这两个元素确定它们的相对顺序。如果 cmp 返回 true，则表示第一个参数应该排在第二个参数之前；如果返回 false，则表示第一个参数应该排在第二个参数之后。
 
 其次是打表法，打表法还是蛮好用的，比我一开始用switch更为简便多了。
+
+
+>11月24号
+>最近在刷掘金的题目；
+>我突然想到
+>```cpp
+>#include<iostream>
+>using namespace std;
+>int main(){
+>	cout<<"PreOrder:";
+>	for(int i=0;i<10;++i)cout<<i;
+>	cout<<endl;<<"PostOrder:";
+>	for(int i=0;i<10;i++)cout<<i;
+>	return 0;
+>```
+>![image](https://github.com/user-attachments/assets/9c4621ac-19bd-44cb-9216-62bd811bdc5f)
+>所以说实际上我写++i也是不会影响到程序的运行的。
