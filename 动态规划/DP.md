@@ -144,6 +144,9 @@ class Solution{
 };
 ```
 
+- 时间复杂度$O(n)$
+- 空间复杂度$O(1)$
+
 注意优化点。
 
 ---
@@ -172,3 +175,77 @@ if (i - j >= 0) dp[i] += dp[i - j];
 
 ---
 
+### 最小花费爬楼梯
+
+[746. 使用最小花费爬楼梯 - 力扣（LeetCode）](https://leetcode.cn/problems/min-cost-climbing-stairs/)
+
+>给你一个整数数组 `cost` ，其中 `cost[i]` 是从楼梯第 `i` 个台阶向上爬需要支付的费用。一旦你支付此费用，即可选择向上爬一个或者两个台阶。
+>
+>你可以选择从下标为 `0` 或下标为 `1` 的台阶开始爬楼梯。
+>
+>请你计算并返回达到楼梯顶部的最低花费。
+
+1. dp数组以及下标的含义
+
+   dp[i]：到达第i阶台阶所花费的最少金币/体力为dp[i]
+
+2. 递推公式
+
+   dp[i]=dp[i-1]+dp[i-2]
+
+   而这里有一个特殊情况，那就是又要考虑到cost[i]的情况：
+
+   dp[i - 1] 跳到 dp[i] 需要花费 dp[i - 1] + cost[i - 1]。  
+
+   dp[i - 2] 跳到 dp[i] 需要花费  dp[i - 2] + cost[i - 2]。
+
+   为了最小化花费我们选择最小的所以dp[i]=min(dp[i-1]+cost[i-1],dp[i-2]+cost[i-2]);
+
+3. dp数组初始化
+
+   dp[0]=0,dp[1]=0;
+
+4. 确定遍历顺序
+
+   > 01背包，都知道两个for循环，⼀个for遍历物品嵌套⼀个for遍历背包容量，那么为什么不是⼀个for遍 历背包容量嵌套⼀个for遍历物品呢？ 以及在使⽤⼀维dp数组的时候遍历背包容量为什么要倒序呢？
+
+5. 举例推导dp数组
+
+   ![image-20241125231701527](C:\Users\陈孟欣\AppData\Roaming\Typora\typora-user-images\image-20241125231701527.png)
+
+```cpp
+class Solution {
+public:
+    int minCostClimbingStairs(vector<int>& cost) {
+        vector<int> dp(cost.size() + 1);
+        dp[0]=0,dp[1]=0;
+        for(int i=2;i<=cost.size();++i){
+            dp[i]=min(dp[i-1]+cost[i-1],dp[i-2]+cost[i-2]);
+        return dp[cost.size()];
+    }
+};
+```
+
+**自己的误区**：我考虑少了min的存在，还有for循环，由于取到的数值`cost.size()+1`是便于`vector`的利用的，我们不用太多`vector`空间。
+
+- 时间复杂度$O(n)$
+- 空间复杂度$O(n)$
+
+```cpp
+class Solution{
+    public:
+    int minCostClimbingStairs(vector<int>&cost){
+        int dp0=0;
+        int dp1=0;
+        for(int i=2;i<=cost.size();++i){
+            int dpi=min(dp1+cost[i-1],dp0+cost[i-2]);
+            dp0=dp1;
+            dp1=dpi;
+        }
+        return dp1;
+    }
+};
+```
+
+- 时间复杂度$O(n)$
+- 空间复杂度$O(1)$
