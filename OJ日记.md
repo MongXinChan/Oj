@@ -466,3 +466,8 @@ int main()
 >```
 >![image](https://github.com/user-attachments/assets/9c4621ac-19bd-44cb-9216-62bd811bdc5f)
 >所以说实际上我写++i也是不会影响到程序的运行的。
+
+
+>11月25~11月26号
+>把题目整理了一遍。
+>`vector`这个还挺好用的~
