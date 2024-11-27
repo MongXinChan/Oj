@@ -16,6 +16,10 @@ DP数组遍历顺序，有时候是需要先在for循环先i后j，有时候先j
 
 ---
 
+[toc]
+
+### 斐波那契数
+
 [509. 斐波那契数 - 力扣（LeetCode）](https://leetcode.cn/problems/fibonacci-number/)
 
 递推思路：
@@ -78,6 +82,8 @@ public:
 - 空间复杂度$O(1)$
 
 ---
+
+### 爬楼梯原题
 
 [70. 爬楼梯 - 力扣（LeetCode）](https://leetcode.cn/problems/climbing-stairs/)
 
@@ -175,7 +181,7 @@ if (i - j >= 0) dp[i] += dp[i - j];
 
 ---
 
-### 最小花费爬楼梯
+### <u>最小花费</u>爬楼梯
 
 [746. 使用最小花费爬楼梯 - 力扣（LeetCode）](https://leetcode.cn/problems/min-cost-climbing-stairs/)
 
@@ -250,3 +256,104 @@ class Solution{
 
 - 时间复杂度$O(n)$
 - 空间复杂度$O(1)$
+
+----
+
+### 不同路径I
+
+[62. 不同路径 - 力扣（LeetCode）](https://leetcode.cn/problems/unique-paths/)
+以下为数论做法：
+```cpp
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        int numerator = 1, denominator = 1;
+        int count = m - 1;
+        int t = m + n - 2;
+        while (count--) numerator *= (t--); // 计算分子，此时分子就会溢出
+        for (int i = 1; i <= m - 1; i++) denominator *= i; // 计算分母
+        return numerator / denominator;
+    }
+};
+```
+
+
+```cpp
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        long long numerator = 1; // 分子
+        int denominator = m - 1; // 分母
+        int count = m - 1;
+        int t = m + n - 2;
+        while (count--) {
+            numerator *= (t--);
+            while (denominator != 0 && numerator % denominator == 0) {
+                numerator /= denominator;
+                denominator--;
+            }
+        }
+        return numerator;
+    }
+};
+```
+
+
+以下为DP做法：
+```cpp
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        vector<vector<int>> dp(m, vector<int>(n, 0));
+        for (int i = 0; i < m; i++) dp[i][0] = 1;
+        for (int j = 0; j < n; j++) dp[0][j] = 1;
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+            }
+        }
+        return dp[m - 1][n - 1];
+    }
+};
+```
+
+
+```cpp
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        // 初始化一个大小为 n+1 的数组 f，用于存储到达每个位置的路径数，初始值均为 0
+        vector<int> f(n + 1, 0);
+        // 将 f[1] 初始化为 1，表示从起点到第一列的第一个位置只有 1 种路径
+        f[1] = 1;
+
+        // 遍历每一行
+        for (int i = 0; i < m; ++i) {
+            // 遍历每一列
+            for (int j = 0; j < n; ++j) {
+                // 更新 f[j+1] 的值，它等于当前位置上方的路径数 f[j] 和左边的路径数 f[j+1] 之和
+                f[j + 1] = f[j] + f[j + 1];
+            }
+        }
+
+        // 返回到达最后一列的路径数，即 f[n]
+        return f[n];
+    }
+};
+
+```
+
+```cpp
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        vector<int> f(n + 1, 0);
+        for (int i = 0; i < m; ++i) 
+            for (int j = 0; j < n; ++j) 
+                f[j + 1] = (i == 0 && j == 0) ? 1 : f[j] + f[j + 1];
+                //当 i==0&&j==0 时，f[j + 1] 被设置为1，这表示在起点处只有一种路径。
+                //在其他情况下，f[j + 1] 的值是通过将当前位置上方的路径数 f[j] 和左边的路径数 f[j + 1] 相加得到的。
+        return f[n];
+    }
+};
+```
