@@ -357,3 +357,42 @@ public:
     }
 };
 ```
+
+
+
+----
+
+### 货车过路费最优化问题
+
+小C驾驶着货车从A地出发，前往B地，中途经过了多个城市。在这个旅途中，每当小C决定进入一个城市时，他必须缴纳该城市的过路费。而有些城市，小C可以选择跳过，但有一个限制:他不能连续跳过两个城市。
+
+你需要帮助小C计算出在这个旅程中，缴纳过路费的最小总额。已知城市的过路费由一个数组`to11`给出，其中`to11[i]`表示第$i$个城市(不包括起点和终点)的过路费。
+
+**约束条件**
+
+1. 小C可以选择跳过部分城市，但不能连续跳过两个城市。
+2. 起点城市和终点城市的过路费不计入计算。
+
+```cpp
+#include <iostream>
+#include <vector>
+
+int solution(std::vector<int>& toll) {
+    // write code here
+    int dp[toll.size()+1];
+    return 0;
+}
+
+int main() {
+    std::vector<int> toll1 = std::vector<int>{1, 2, 3};
+    std::cout << (solution(toll1) == 2) << std::endl;
+
+    std::vector<int> toll2 = std::vector<int>{5, 10, 3, 1, 6};
+    std::cout << (solution(toll2) == 9) << std::endl;
+
+    std::vector<int> toll3 = std::vector<int>{4, 6, 8};
+    std::cout << (solution(toll3) == 6) << std::endl;
+    return 0;
+}
+```
+
