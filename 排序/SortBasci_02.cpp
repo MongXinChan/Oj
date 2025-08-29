@@ -1,5 +1,5 @@
 #include<iostream>
-#define MAXN 423399 //如果没加(int)会出现size of array 'arr' has non-intergral type 'double'
+#define MAXN 423399 //濡傛灉娌″姞(int)浼氬嚭鐜皊ize of array 'arr' has non-intergral type 'double'
 int arr[MAXN];
 
 int partition(int arr[], int low, int high) {

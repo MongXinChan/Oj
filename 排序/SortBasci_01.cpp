@@ -2,7 +2,7 @@
 #define MAXN 100000
 #define int long long
 
-signed main(){//因为有int long long所以用signed
+signed main(){//鍥犱负鏈塱nt long long鎵�浠ョ敤signed
     signed n,a[MAXN];
     std::cin>>n;
     for(signed i=0;i<n;i++){

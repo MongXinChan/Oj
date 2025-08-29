@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>  //包含了C++所有头文件
+#include<bits/stdc++.h>  //鍖呭惈浜咰++鎵�鏈夊ご鏂囦欢
 
 int main(){
     int n;
@@ -6,7 +6,7 @@ int main(){
     std::string t1,t2,arr[n];
     for (int i = 0; i < n; i++)
          std::cin>>arr[i];
-    for (int i = 0; i < n-1; i++){//选择排序
+    for (int i = 0; i < n-1; i++){//閫夋嫨鎺掑簭
         for (int j = i+1; j < n; j++){   
             t1=arr[i]+arr[j];  
             t2=arr[j]+arr[i]; 

@@ -1,8 +1,8 @@
 class Solution {
 public:
     vector<int> shuffle(vector<int>& nums, int n) {
-        //¿¼ÂÇµ½2n¸öÔªËØ
-        //vectorÔõÃ´¶Ô°ëÈ¡ÊÇÒ»¸öÎÊÌâ
+        //è€ƒè™‘åˆ°2nä¸ªå…ƒç´ 
+        //vectoræ€ä¹ˆå¯¹åŠå–æ˜¯ä¸€ä¸ªé—®é¢˜
         for(int i=0;i<2*n;i++){
             int j=i<n?2 *i:2*(i-n)+1;
             nums[j] |=(nums[i]&1023)<<10;
